@@ -1,5 +1,6 @@
 from django.db import models
 from quizes.models import Quiz
+from django.utils.translation import gettext_lazy as _
 
 
 # Create your models here.
@@ -31,11 +32,11 @@ class Answer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = _("Answers")
-        verbose_name_plural = _("Answerss")
+        verbose_name = _("Answer")
+        verbose_name_plural = _("Answers")
 
     def __str__(self):
         return f"question: {self.question.text}, answer: {self.text}, correct: {self.correct} "
 
     def get_absolute_url(self):
-        return reverse("Answers_detail", kwargs={"pk": self.pk})
+        return reverse("Answer_detail", kwargs={"pk": self.pk})
