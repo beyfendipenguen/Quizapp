@@ -8,6 +8,7 @@ DIFICULTLY_CHOICES = (
     ('hard', 'hard')    
 )
 
+# all fields for a simple quiz
 class Quiz(models.Model):
     name = models.CharField(max_length=120)
     topic = models.CharField(max_length=120)
@@ -22,7 +23,7 @@ class Quiz(models.Model):
 
     
     def get_questions(self):
-        pass
+        return self.question_set.all()
 
     def __str__(self):
         return f"{self.name}-{self.topic}"
