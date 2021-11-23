@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+import random
 
 # Create your models here.
 
@@ -24,7 +25,9 @@ class Quiz(models.Model):
 
     
     def get_questions(self):
-        return self.question_set.all()
+        questions = list(self.question_set.all())
+        random.shuffle(questions)
+        return questions[:self.number_of_questions] 
 
     def __str__(self):
         return f"{self.name}-{self.topic}"
