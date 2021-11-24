@@ -16,7 +16,7 @@ class Result(models.Model):
         verbose_name_plural = _("Results")
 
     def __str__(self):
-        return self.pk
+        return f"{self.user}-{self.quiz.name}-{self.score}"
 
     def get_absolute_url(self):
         return reverse("Result_detail", kwargs={"pk": self.pk})
