@@ -12,11 +12,14 @@
 {% endblock title %}
 
 {% block content %}
-{{obj.name}}
+<b>{{obj.name}}</b>
+<p>score to pass: {{obj.required_score_to_pass}}%</p>
 
 <form id="quiz-form" class="mt-3 mb-3">
     {% csrf_token %}
     <div id="quiz-box"></div>
     <button type="submit" class="btn btn-primary mt-3">save </button>
 </form>
+<div id="score-box"></div>
+<div id="result-box"></div>
 {% endblock content %}

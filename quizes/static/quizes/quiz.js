@@ -2,6 +2,8 @@ console.log('hello')
 const url = window.location.href
 
 const quizBox = document.getElementById("quiz-box")
+const scoreBox = document.getElementById("score-box")
+const resultBox = document.getElementById("result-box")
 
 
 $.ajax({
@@ -60,7 +62,42 @@ const sendData =  () => {
         url: `${url}save/`,
         data: data,
         success: function(response){
-            console.log(response)
+            //console.log(response)
+            const results = response.results
+            console.log(results)
+            quizForm.classList.add('not-visible')
+
+            scoreBox.innerHTML = `${response.passed ? 'congratulations! ' : 'Ups...:( '} your result is ${response.score.toFixed(2)}%`
+
+            results.forEach(res=>{
+                const resDiv = document.createElement("div")
+                for(const [question, resp] of Object.entries(res)){
+                    resDiv.innerHTML += question
+                    const cls = ['container', 'p-3', 'text-light', 'h6']
+                    resDiv.classList.add(...cls)
+                    
+                    if(resp == 'not answered'){
+                        resDiv.innerHTML += ' -not answered'
+                        resDiv.classList.add('bg-danger')
+                    }
+                    else{
+                        const answer = resp['answered']
+                        const correct = resp['correct_answer']
+
+                        if(answer == correct){
+                            resDiv.classList.add('bg-success')
+                            resDiv.innerHTML += ` answered: ${answer}`
+                        }else{
+                            resDiv.classList.add('bg-danger')
+                            resDiv.innerHTML += ` | correct answer: ${correct}`
+                            resDiv.innerHTML += ` | answered: ${answer}`
+
+                        }
+                    }
+                }
+                resultBox.append(resDiv)
+            })
+
         },
         error: function(error){
             console.log(error)
